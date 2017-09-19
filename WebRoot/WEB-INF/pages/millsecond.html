@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>秒表统计</title>
+		<script type="text/javascript">
+		    var i=0;
+			var time  = new Date();
+			var xhsj = window.setInterval(function(){
+				i++;
+				time.setDate(i);
+				document.getElementById("mbspan").innerText=time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()+" "+time.getMilliseconds(); ;
+			}, 1000);
+			
+			//暂停
+			function stopxhsj(){
+				window.clearInterval(xhsj);
+			}
+			
+			//继续
+			function goxhsj(){
+				xhsj();
+			}
+			
+			//重置
+			function resetXhsj(){
+				i=0;
+			}
+		</script>
+	</head>
+	<body>
+		<span id="mbspan"></span>
+<!-- <INPUT type="text" name="mbspan" id="mbspan"/> -->
+		<INPUT type="button" value="开始" onclick="goxhsj()"/>
+		<INPUT type="button" value="重置" onclick="resetXhsj()"/>
+		<INPUT type="button" value="暂停" onclick="stopxhsj()"/>
+	</body>
+</html>

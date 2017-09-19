@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="ssmtest.scy.dao.UserDao">
+  <resultMap type="ssmtest.scy.pojo.User" id="userResult">
+  <result column="id" property="id" />
+  <result column="xm" property="xm" />
+  </resultMap>
+  <sql id="queryuser">
+  	t.id,t.xm
+  </sql>
+  <select id="find" resultMap="userResult" parameterType="Map">
+  	select <include refid="queryuser" /> from User t
+  	<where>
+  		<if test="params !=null and params.xm!='' and params.xm!=null">
+  		   t.xm like concat('%',#{params.xm},'%')
+  		</if>
+  	</where>
+  </select>
+  <select id="findById" parameterType="String" resultMap="userResult">
+  	select <include refid="queryuser" /> from User t where t.id=#{id}
+  </select>
+  <delete id="delete" parameterType="String">
+  	delete from User where id=#{id}
+  </delete>
+  <insert id="add">
+  	insert into User(id,xm) values(#{id},#{xm})
+  </insert>
+  <update id="update">
+  	update User set xm=#{xm} where id=#{id}
+  </update>
+</mapper>
+  
