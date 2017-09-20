@@ -1,5 +1,8 @@
 package ssmtest.scy.arithmetic;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class arithmeticTest {
 	public static Integer count=0;
 	public static void main(String[] args) {
@@ -14,11 +17,69 @@ public class arithmeticTest {
 		System.out.println(test.pop());
 		System.out.println(test.pop());*/
 		
-		hanNuoTa(9, 'A', 'C', 'B');
-		System.out.println(count);
+		/*hanNuoTa(9, 'A', 'C', 'B');
+		System.out.println(count);*/
+		
+		System.out.println(Arrays.asList(recuiseSort(new Integer[]{10,2,4,3,5,9,11,21,7})));
 	}
 	
 	
+	//归并排序
+	public static Integer[] recuiseSort(Integer[] source){
+		//1.二分
+		if(source.length==1){
+			return source;
+		}
+		Integer middel = (Integer)source.length/2;
+		Integer[] left =new Integer[middel];
+		Integer[] right = new Integer[source.length-middel];
+		//赋值
+		System.arraycopy(source, 0, left, 0, left.length);
+		System.arraycopy(source, middel, right, 0, right.length);
+		left = recuiseSort(left);//递归调用，排好序
+		right = recuiseSort(right);
+		//2.合并
+		source  = mergeSort(left,right);
+		return source;
+	};
+	
+	
+	private static Integer[] mergeSort(Integer[] left, Integer[] right) {
+		// TODO Auto-generated method stub
+		//1.创建第三个数组，用于存放 left和right数组内的值
+		Integer[] source = new Integer[left.length+right.length];
+		Integer sourceIndex=0;
+		Integer leftIndex=0;
+		Integer rightIndex=0;
+		//2.判断合并
+		//1)如果都存在数组
+		while(leftIndex<left.length && rightIndex<right.length){
+			if(left[leftIndex]<=right[rightIndex]){
+				source[sourceIndex]=left[leftIndex];
+				leftIndex++;
+			}else{
+				source[sourceIndex]=right[rightIndex];
+				rightIndex++;
+			}
+			sourceIndex++;
+		}
+		//2)如果left数据不存在了
+		while(leftIndex==left.length && rightIndex<right.length ){
+			source[sourceIndex]=right[rightIndex];
+			rightIndex++;
+			sourceIndex++;
+		}
+		//3)如果right数据不存在了
+		while(rightIndex==right.length && leftIndex<left.length ){
+			source[sourceIndex]=left[leftIndex];
+			leftIndex++;
+			sourceIndex++;
+		}
+		
+		return source;
+	}
+
+
 	/**
 	 * 汉诺塔
 	 * 步骤 A B C
