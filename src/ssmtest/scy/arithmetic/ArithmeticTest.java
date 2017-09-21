@@ -3,7 +3,7 @@ package ssmtest.scy.arithmetic;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class arithmeticTest {
+public class ArithmeticTest {
 	public static Integer count=0;
 	public static void main(String[] args) {
 		Integer[] a = new Integer[]{10,8,20,7,11,12,4};
@@ -20,9 +20,42 @@ public class arithmeticTest {
 		/*hanNuoTa(9, 'A', 'C', 'B');
 		System.out.println(count);*/
 		
-		System.out.println(Arrays.asList(recuiseSort(new Integer[]{10,2,4,3,5,9,11,21,7})));
+//		System.out.println(Arrays.asList(recuiseSort(new Integer[]{10,2,4,3,5,9,11,21,7})));
+		
+		Integer[] source =new Integer[]{10,2,4,3,5,9,11,21,7};
+		System.out.println(Arrays.asList(shellSort(source, 4)));
 	}
 	
+	public static Integer[] shellSort(Integer[] source,Integer k){
+		while(k>0){
+			for(int h = 0;h<k;h++){//只遍历到k-1下标，因为其它的都会通过增量判定到
+				System.out.println(h+"---"+k);
+				//插入排序
+				for (int i = h+k; i < source.length; i=i+k) {
+					boolean flag = false;//用于表示是否进行了插入操作
+					Integer temp=0;
+					for (int j = h; j < i; j=j+k) {
+						if(!flag && source[i]<=source[j]){
+						   	temp = source[j];
+						   	source[j]=source[i];
+						   	flag=true;
+						   	break;
+						}
+						if(flag){
+							Integer tempj= source[j];
+						   	source[j]=temp;
+							temp = tempj;
+						}
+					}
+					if(flag){
+						source[i]=temp;
+					}
+				}
+			}
+			k=(Integer)k/2;
+		}
+		return source;
+	}
 	
 	//归并排序
 	public static Integer[] recuiseSort(Integer[] source){
