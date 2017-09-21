@@ -1,7 +1,11 @@
 package ssmtest.scy.arithmetic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+
+import com.thoughtworks.xstream.converters.reflection.SortableFieldKeySorter;
 
 public class ArithmeticTest {
 	public static Integer count=0;
@@ -23,7 +27,51 @@ public class ArithmeticTest {
 //		System.out.println(Arrays.asList(recuiseSort(new Integer[]{10,2,4,3,5,9,11,21,7})));
 		
 		Integer[] source =new Integer[]{10,2,4,3,5,9,11,21,7};
-		System.out.println(Arrays.asList(shellSort(source, 4)));
+//		System.out.println(Arrays.asList(shellSort(source, 4)));
+		
+		System.out.println(Arrays.asList(recQuickSort(source)));
+	}
+	
+	/**
+	 * 
+	 * Description:快速排序思想
+	 * 选择一个关键字，将小于关键字的放在左边，大于关键字的放在右边，递归调用。
+	 * <br/>
+	 * Date: 2017年9月21日 下午3:02:03 <br/>
+	
+	 * @author sunchaoyuan
+	 * @param source
+	 * @return
+	 */
+	public static Integer[] recQuickSort(Integer[] source){
+		if(source.length==0){
+			return null;
+		}
+		if(source.length==1){
+			return source;
+		}
+		List<Integer> left = new ArrayList<>();
+		List<Integer> right = new ArrayList<>();
+		List<Integer> targetList = new ArrayList<>();
+		Integer target = source[source.length-1];//关键字用于站队的标杆
+		for (int i = 0; i < source.length-1; i++) {
+			if(source[i]<=target){
+				left.add(source[i]);
+			}else{
+				right.add(source[i]);
+			}
+		}
+		if(left.size()>0){
+			left =Arrays.asList(recQuickSort(left.toArray(new Integer[left.size()])));
+		}
+		if(right.size()>0){
+		    right =Arrays.asList(recQuickSort(right.toArray(new Integer[right.size()])));
+		}
+		targetList.addAll(left);
+		targetList.add(target);
+		targetList.addAll(right);
+		source = targetList.toArray(new Integer[left.size()]);
+		return source;
 	}
 	
 	public static Integer[] shellSort(Integer[] source,Integer k){
